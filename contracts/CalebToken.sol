@@ -2,7 +2,7 @@ pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 
-contract TutorialToken is ERC20 {
+contract CalebToken is ERC20 {
     string public name = "CalebToken";
 
     string public symbol = "CT";
