@@ -2,11 +2,11 @@ App = {
   web3Provider: null,
   contracts: {},
 
-  init: function() {
+  init: function () {
     return App.initWeb3();
   },
 
-  initWeb3: function() {
+  initWeb3: function () {
     // Initialize web3 and set the provider to the testRPC.
     if (typeof web3 !== 'undefined') {
       App.web3Provider = web3.currentProvider;
@@ -20,8 +20,8 @@ App = {
     return App.initContract();
   },
 
-  initContract: function() {
-    $.getJSON('TutorialToken.json', function(data) {
+  initContract: function () {
+    $.getJSON('TutorialToken.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract.
       var TutorialTokenArtifact = data;
       App.contracts.TutorialToken = TruffleContract(TutorialTokenArtifact);
@@ -36,61 +36,64 @@ App = {
     return App.bindEvents();
   },
 
-  bindEvents: function() {
+  bindEvents: function () {
     $(document).on('click', '#transferButton', App.handleTransfer);
   },
 
-  handleTransfer: function(event) {
+  handleTransfer: function (event) {
     event.preventDefault();
 
-    var amount = parseInt($('#TTTransferAmount').val());
-    var toAddress = $('#TTTransferAddress').val();
+    var amount = parseInt($('#CTTransferAmount').val());
+    var toAddress = $('#CTTransferAddress').val();
 
-    console.log('Transfer ' + amount + ' TT to ' + toAddress);
+    console.log('Transfer ' + amount + ' CT to ' + toAddress);
 
     var tutorialTokenInstance;
 
-    web3.eth.getAccounts(function(error, accounts) {
+    web3.eth.getAccounts(function (error, accounts) {
       if (error) {
         console.log(error);
       }
 
       var account = accounts[0];
 
-      App.contracts.TutorialToken.deployed().then(function(instance) {
+      App.contracts.TutorialToken.deployed().then(function (instance) {
         tutorialTokenInstance = instance;
 
-        return tutorialTokenInstance.transfer(toAddress, amount, {from: account, gas: 100000});
-      }).then(function(result) {
+        return tutorialTokenInstance.transfer(toAddress, amount, {
+          from: account,
+          gas: 100000
+        });
+      }).then(function (result) {
         alert('Transfer Successful!');
         return App.getBalances();
-      }).catch(function(err) {
+      }).catch(function (err) {
         console.log(err.message);
       });
     });
   },
 
-  getBalances: function() {
+  getBalances: function () {
     console.log('Getting balances...');
 
     var tutorialTokenInstance;
 
-    web3.eth.getAccounts(function(error, accounts) {
+    web3.eth.getAccounts(function (error, accounts) {
       if (error) {
         console.log(error);
       }
 
       var account = accounts[0];
 
-      App.contracts.TutorialToken.deployed().then(function(instance) {
+      App.contracts.TutorialToken.deployed().then(function (instance) {
         tutorialTokenInstance = instance;
 
         return tutorialTokenInstance.balanceOf(account);
-      }).then(function(result) {
+      }).then(function (result) {
         balance = result.c[0];
 
-        $('#TTBalance').text(balance);
-      }).catch(function(err) {
+        $('#CTBalance').text(balance);
+      }).catch(function (err) {
         console.log(err.message);
       });
     });
@@ -98,8 +101,8 @@ App = {
 
 };
 
-$(function() {
-  $(window).load(function() {
+$(function () {
+  $(window).load(function () {
     App.init();
   });
 });
