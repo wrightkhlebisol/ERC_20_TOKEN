@@ -11,6 +11,8 @@ contract TutorialToken is ERC20 {
 
     uint public INITIAL_SUPPLY = 12000;
 
-    
+    constructor() public {
+        _mint(msg.sender, INITIAL_SUPPLY);
+    }
 
 }
