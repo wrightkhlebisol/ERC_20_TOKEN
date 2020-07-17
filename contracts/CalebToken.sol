@@ -1,6 +1,6 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
-import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 
 contract CalebToken is ERC20 {
     string public name = "CalebToken";
